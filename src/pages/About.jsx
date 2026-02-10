@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const About = () => {
-  return <div className="text-red-700">About</div>;
+  const { name } = useContext(UserContext);
+  return <div className="text-red-700">About - {name}</div>;
 };
 
 export default About;
