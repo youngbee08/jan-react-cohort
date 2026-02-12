@@ -1,13 +1,20 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 
-export const UserContext = createContext();
+export const userContext = createContext();
 
-const UserProvider = ({ children }) => {
-  const [name, setName] = useState("");
-  const [theme, setTheme] = useState("white");
-
-  const value = { name, setName, theme, setTheme };
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+const Userprovider = ({ children }) => {
+  const user = {
+    name: "Adesoye Toyeeb",
+    occupation: "Co-founder",
+    business_name: "Mysavemate",
+    gender: "male",
+    email: "adesoyetoyeeb01@gmail.com",
+    phone: "09037140948",
+  };
+  const value = {
+    user,
+  };
+  return <userContext.Provider value={value}>{children}</userContext.Provider>;
 };
 
-export default UserProvider;
+export default Userprovider;

@@ -2,13 +2,13 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import Header from "./components/navs/Header";
 import MainLayout from "./components/layouts/MainLayout";
-import UserProvider from "./contexts/UserContext";
+import Userprovider from "./contexts/UserContext";
+import Products from "./pages/Products";
 
 const App = () => {
   return (
-    <UserProvider>
+    <Userprovider>
       <BrowserRouter>
         <Routes>
           <Route
@@ -20,9 +20,13 @@ const App = () => {
             }
           />
           <Route path="/about" element={<MainLayout children={<About />} />} />
+          <Route
+            path="/products"
+            element={<MainLayout children={<Products />} />}
+          />
         </Routes>
       </BrowserRouter>
-    </UserProvider>
+    </Userprovider>
   );
 };
 
