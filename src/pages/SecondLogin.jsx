@@ -1,9 +1,11 @@
 import React from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 export default function SecondLogin() {
   const base_url = "https://dummyjson.com";
+  const naviagte = useNavigate();
   const formSchema = yup.object({
     username: yup
       .string()
@@ -35,6 +37,7 @@ export default function SecondLogin() {
         if (res.status === 200) {
           alert("Login successful");
           console.log(data);
+          naviagte("/dashboard/overview");
           return;
         }
         alert(data.message);
@@ -106,3 +109,4 @@ export default function SecondLogin() {
 }
 
 //SAVE: POST - PATCH - DELETE - GET - PUT
+//TODO:Learn about status codes
