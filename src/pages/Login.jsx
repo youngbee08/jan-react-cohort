@@ -34,6 +34,7 @@ export default function Login() {
             className="mt-2 w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-300"
             placeholder="you@example.com"
             onChange={handleInputChange}
+            required
           />
         </div>
 
@@ -46,6 +47,8 @@ export default function Login() {
             name="password"
             className="mt-2 w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-300"
             placeholder="••••••••"
+            required
+            minLength={8}
             onChange={handleInputChange}
           />
         </div>
