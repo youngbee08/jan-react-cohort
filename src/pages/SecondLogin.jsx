@@ -3,12 +3,13 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 
 export default function SecondLogin() {
+  const base_url = "https://dummyjson.com";
   const formSchema = yup.object({
-    email: yup
+    username: yup
       .string()
-      .required("Please provide your email address.")
+      .required("Please provide your username address.")
       .trim()
-      .lowercase("Email address should only be lowercase"),
+      .lowercase("Username address should only be lowercase"),
     password: yup
       .string()
       .required("Please provide your password")
@@ -18,13 +19,31 @@ export default function SecondLogin() {
 
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
     validationSchema: formSchema,
-    onSubmit: async (value, {resetForm}) => {
-      console.log(value);
-      resetForm()
+    onSubmit: async (value, { resetForm, setSubmitting }) => {
+      setSubmitting(true);
+      try {
+        const res = await fetch(`${base_url}/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(value),
+        });
+        const data = await res.json();
+        if (res.status === 200) {
+          alert("Login successful");
+          console.log(data);
+          return;
+        }
+        alert(data.message);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setSubmitting(false);
+        resetForm();
+      }
     },
   });
   return (
@@ -37,20 +56,19 @@ export default function SecondLogin() {
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
-            Email
+            username
           </label>
           <input
-            type="email"
-            name="email"
+            type="text"
+            name="username"
             className="mt-2 w-full rounded-md border border-gray-300 px-3 py-2 outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-300"
-            placeholder="you@example.com"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.email}
+            value={formik.values.username}
           />
-          {formik.errors.email && formik.touched.email && (
+          {formik.errors.username && formik.touched.username && (
             <span className="text-xs text-red-600 font-semibold">
-              {formik.errors.email}
+              {formik.errors.username}
             </span>
           )}
         </div>
@@ -77,11 +95,14 @@ export default function SecondLogin() {
 
         <button
           type="submit"
+          disabled={formik.isSubmitting}
           className="w-full rounded-md bg-gray-900 py-2.5 text-white font-medium hover:bg-gray-800 active:scale-[0.99] transition"
         >
-          Login
+          {formik.isSubmitting ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
   );
 }
+
+//SAVE: POST - PATCH - DELETE - GET - PUT
