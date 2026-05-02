@@ -1,14 +1,15 @@
 import React from "react";
-import * as yup from "yup";
+import * as yup from "yup"
 import { useFormik } from "formik";
 
 export default function SecondLogin() {
   const formSchema = yup.object({
     email: yup
       .string()
+      .email("please enter a valid email")
       .required("Please provide your email address.")
       .trim()
-      .lowercase("Email address should only be lowercase"),
+      .lowercase(),
     password: yup
       .string()
       .required("Please provide your password")
@@ -22,9 +23,9 @@ export default function SecondLogin() {
       password: "",
     },
     validationSchema: formSchema,
-    onSubmit: async (value, {resetForm}) => {
+    onSubmit: async (value, { resetForm }) => {
       console.log(value);
-      resetForm()
+      resetForm();
     },
   });
   return (
