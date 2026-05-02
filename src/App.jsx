@@ -8,18 +8,21 @@ import Products from "./pages/Products";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import SecondLogin from "./pages/SecondLogin";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const App = () => {
   return (
     <Userprovider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to={"/auth/login2"}/>} />
-          
+          <Route path="/" element={<Navigate to={"/auth/login2"} />} />
+
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/login2" element={<SecondLogin />} />
-          
-          <Route path="/dashboard/overview" element={<Dashboard />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard/overview" element={<Dashboard />} />
+          </Route>
 
           <Route
             path="/home"
