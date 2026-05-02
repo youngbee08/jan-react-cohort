@@ -1,18 +1,22 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 export const userContext = createContext();
 
 const Userprovider = ({ children }) => {
-  const user = {
-    name: "Adesoye Toyeeb",
-    occupation: "Co-founder",
-    business_name: "Mysavemate",
-    gender: "male",
-    email: "adesoyetoyeeb01@gmail.com",
-    phone: "09037140948",
-  };
+  const existingUser = JSON.parse(localStorage.getItem("userDetails"));
+
+  const [user, setUser] = useState(existingUser || null);
+
+  function logUserIn(details) {
+    if (!details) {
+      return;
+    }
+    localStorage.setItem("userDetails", JSON.stringify(details));
+    setUser(details);
+  }
   const value = {
     user,
+    logUserIn,
   };
   return <userContext.Provider value={value}>{children}</userContext.Provider>;
 };

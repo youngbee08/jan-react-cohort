@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { userContext } from "../contexts/UserContext";
 
 export default function SecondLogin() {
+  const { logUserIn } = useContext(userContext);
   const base_url = "https://dummyjson.com";
   const naviagte = useNavigate();
   const formSchema = yup.object({
@@ -36,7 +38,7 @@ export default function SecondLogin() {
         const data = await res.json();
         if (res.status === 200) {
           alert("Login successful");
-          console.log(data);
+          logUserIn(data);
           naviagte("/dashboard/overview");
           return;
         }
